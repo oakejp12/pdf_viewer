@@ -1,0 +1,32 @@
+doctype html
+html
+  head
+    title= title
+    meta(charset='UTF-8')
+    base(href='/')
+    link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body(ng-app='app')
+    nav.navbar.navbar-default(role='navigation')
+      .container-fluid
+        .navbar-header
+          button.navbar-toggle(data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+            span.sr-only
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          div(ng-controller="urlCtrl")
+            a.navbar-brand(href='/#' ng-click="redirect('/')") HP PDF Viewer
+        #bs-example-navbar-collapse-1.collapse.navbar-collapse
+          div(ng-controller="urlCtrl")
+            ul.nav.navbar-nav
+              li
+                a(href='/upload' ng-click="redirect('/upload')") Document Listing
+          div(ng-include="'/partials/navbar-login'")
+
+
+
+
+
+    block content
+    include scripts

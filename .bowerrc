@@ -1,0 +1,7 @@
+{
+  "directory" : "public/vendor",
+  "registry" : "http://bower.herokuapp.com",
+  "proxy" : "http://web-proxy.corp.hp.com:8088",
+  "https-proxy" : "http://web-proxy.corp.hp.com:8088",
+  "strict-ssl" : false
+}

@@ -1,0 +1,8 @@
+node_modules
+.DS_Store
+*.sock
+**/.idea/workspace.xml
+**/.idea/dictionaries
+**/.idea/watcherTasks.xml
+**/.idea/tasks.xml
+server/uploads

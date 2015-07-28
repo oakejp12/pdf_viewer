@@ -1,0 +1,31 @@
+//
+   Created by Oakes on 7/14/15.
+
+extends layout
+
+// TODO: Create a login to access this form : Tester's should not access this
+   WARN:  enctype="multipart/form-data" won't let you access the data with req.body as normal
+block content
+   .container
+      .well
+         form.form-horizontal(name="pdfUpload" enctype="multipart/form-data" method="post" action="/document")
+            fieldset
+               legend Upload the desired PDFs and give the set a version number
+               .form-group
+                  label.col-md-2.control-label(for="pdf_file") Select your PDF:
+                  .col-md-10
+                     input#pdf_file(type="file" name="file" value=file required multiple).form-control.input-lg
+               .form-group
+                  label.col-md-2.control-label(for="pdf_version") PDF version
+                  .col-md-10
+                     input#pdf_version(type="text" name="version" value=version placeholder="Only input version number" required).form-control.input-lg
+               .form-group
+                  .col-md-10.col-md-offset-2
+                  .pull-right
+                     button(type="submit").btn.btn-primary Submit
+
+
+
+
+
+

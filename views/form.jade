@@ -1,0 +1,32 @@
+block content
+    .container
+        .well
+            form.form-horizontal(name="resultSubmit" method="post" action="/create")
+                fieldset
+                    legend HP PDF Metrology
+                    .form-group
+                        label.col-md-2.control-label(for="Name") Name
+                        .col-md-10
+                            input#Name(name="Name" value=name type="text" placeholder="John Smith" required).form-control.input-lg
+                    .form-group
+                        label.col-md-2.control-label(for="selectbasic") Select One
+                        .col-md-10
+                            select#selectbasic(name="better_pdf").form-control
+                                option(value=-2) U is much better than S
+                                option(value=-1) U is better than S
+                                option(value=0) U is the same as S
+                                option(value=1) S is better than U
+                                option(value=2) S is much better than U
+                    .form-group
+                        label.col-md-2.control-label(for="printS") Is S good enough to print?
+                        .col-md-10
+                            label.radio-inline(for="radios-1")
+                                input#radios-1(type="radio" name="printS" value=1 checked="checked")
+                                | Yes
+                            label.radio-inline(for="radios-0")
+                                input#radios-0(type="radio" name="printS" value=0)
+                                | No
+                    .form-group
+                        .col-md-10.col-md-offset-2
+                        .pull-right
+                            button(type="submit").btn.btn-primary Submit
