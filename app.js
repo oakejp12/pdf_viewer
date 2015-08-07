@@ -29,10 +29,12 @@ require('./server/config/mongoose')(config);
 require('./server/config/mongodb')(config);
 
 
+
 /* Routes */
 var form = require('./routes/form');
 var routes = require('./routes/index');
 var upload = require('./routes/upload');
+var readFiles = require('./public/javascripts/readFiles');
 
 /* File upload */
 app.use(multer ({ dest: './server/uploads/',
@@ -50,6 +52,7 @@ app.use(multer ({ dest: './server/uploads/',
 
 // Get '/server/uploads/' directory
 require('./public/javascripts/deleteFiles');
+require('./public/javascripts/readFiles');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

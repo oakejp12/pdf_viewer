@@ -7,7 +7,6 @@
 
 
 var express = require('express'),
-    router = express.Router,
     util = require('util'),
     assert = require('assert'),
     fs = require('fs');
@@ -200,6 +199,4 @@ function callForDocs(){
     });
 }
 
-
-router.post('/', function )
-callForDocs();
+// callForDocs();
