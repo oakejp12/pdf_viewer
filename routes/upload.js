@@ -18,7 +18,7 @@ db.open(function(err, db) {
     gfs = Grid(db, mongo);
 });
 
-/* GET PDF's */
+/* Get upload view */
 router.get('/', function(req, res) {
   res.render('upload');
 });
