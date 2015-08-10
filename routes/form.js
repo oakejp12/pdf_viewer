@@ -28,7 +28,7 @@ router.post('/', function(req,res) {
         });
     });
 
-    res.redirect('/');
+    res.send('View the next pdf selection.');
 });
 
 

@@ -19,8 +19,7 @@ block content
 
   // TODO: Mess with abstraction of bundle.js & pdfRender.js
   script(type='text/javascript' src='/javascripts/pdf.js')
-  script(type='text/javascript' src='/javascripts/readFiles.js')
-
+  script(src='http://code.jquery.com/jquery-1.11.3.min.js')
 
   script(type='text/javascript').
     var loadPdf = function (id, pdfLocation) {
@@ -114,28 +113,74 @@ block content
 
   .row
     .col-md-6
-      h2 S
+      h2 Simplied - S
       // INFO : PDF's are loaded from the bottom of /public/javascripts/pdfRender.js
       canvas#canvasNum1(style='border:1px solid black' height='633' width='720')
-      script(type='text/javascript').
-        loadPdf('canvasNum1','/uploads/S_amber.pdf');
     .col-md-6
-      h2 U
+      h2 Unsimplified - U
       canvas#canvasNum2(style='border:1px solid black' height='633' width='720')
-      script(type='text/javascript').
-        loadPdf('canvasNum2', '/uploads/U_amber.pdf');
 
   br
   br
   br
+
 
   // Include form.jade
   include form
 
+  // Script to handle update form
+  // TODO : Handle radio buttons
+  script(type="text/javascript").
+    $("#update").click(function(event) {
+      event.preventDefault();
+      var name = $("#name").val();
+      var better_pdf = $("#betterPdf").val();
+      var dataString = 'Name=' + name + '&better_pdf='+better_pdf;
+      $.ajax({
+        type:'POST',
+        data: dataString,
+        url: '/create',
+        success: callback()
+      });
+    });
 
+  // Script to handle PDF rendering
+  // Script get the filenames from routes/index.js
+  script(type='text/javascript').
+    function getFilenames() {
+      return $.ajax({
+        type: 'GET',
+        url: 'http://localhost:3000/read'
+      });
+    }
 
+    getFilenames().done(callback);
 
+    function callback(data) {
+      var returned_filenames = !{data};
+      console.dir(returned_filenames);
+      var lenU = returned_filenames[0].length;
+      var lenS = returned_filenames[1].length;
 
+      // Increment value in the array index to show next pdf!
+      var incrementValue = increment();
+      if (incrementValue >= lenU || incrementValue >= lenS) {
+        alert('Test is over! Thank you!');
+      } else {
+        loadPdf('canvasNum2', 'uploads/' + returned_filenames[0][incrementValue]);
+        loadPdf('canvasNum1', 'uploads/' + returned_filenames[1][incrementValue]);
+      }
+    }
 
+  // Script to increment a number
+  // Used inside getFilenames functions
+  script(type="text/javascript").
+    var increment = (function() {
+      var n = -1;
 
+      return function () {
+        n += 1;
+        return n;
+      }
+    }());
 

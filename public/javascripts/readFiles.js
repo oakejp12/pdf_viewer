@@ -179,7 +179,7 @@ function randomizeArray(u_array, s_array, wnumber) {
 * TODO : I have the random file names, now I need to render them to index.jade
 */
 function callForDocs(){
-    getFiles(function(data){
+    return getFiles(function(data){
         console.log('*** Calling getFiles ***');
 
         var U_names = data[0];

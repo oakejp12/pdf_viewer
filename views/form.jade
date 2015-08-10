@@ -1,17 +1,17 @@
 block content
     .container
         .well
-            form.form-horizontal(name="resultSubmit" method="post" action="/create")
+            form.form-horizontal(name="resultForm" method="post" action="/create")
                 fieldset
                     legend HP PDF Metrology
                     .form-group
                         label.col-md-2.control-label(for="Name") Name
                         .col-md-10
-                            input#Name(name="Name" value=name type="text" placeholder="John Smith" required).form-control.input-lg
+                            input#name(name="Name" value=name type="text" placeholder="John Smith" required).form-control.input-lg
                     .form-group
                         label.col-md-2.control-label(for="selectbasic") Select One
                         .col-md-10
-                            select#selectbasic(name="better_pdf").form-control
+                            select#betterPdf(name="better_pdf").form-control
                                 option(value=-2) U is much better than S
                                 option(value=-1) U is better than S
                                 option(value=0) U is the same as S
@@ -29,4 +29,4 @@ block content
                     .form-group
                         .col-md-10.col-md-offset-2
                         .pull-right
-                            button(type="submit").btn.btn-primary Submit
+                            button(type="submit" name="Update" id="update" value="Update").btn.btn-primary Submit
