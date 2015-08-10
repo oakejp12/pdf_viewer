@@ -133,9 +133,10 @@ block content
   script(type="text/javascript").
     $("#update").click(function(event) {
       event.preventDefault();
+      var pdf = $("#pdf").val();
       var name = $("#name").val();
       var better_pdf = $("#betterPdf").val();
-      var dataString = 'Name=' + name + '&better_pdf='+better_pdf;
+      var dataString = 'Name=' + name + '&pdf=' + pdf + '&better_pdf='+better_pdf;
       $.ajax({
         type:'POST',
         data: dataString,
