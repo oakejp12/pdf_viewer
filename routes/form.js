@@ -1,9 +1,11 @@
+/*jslint node: true*/
 'use strict';
 
 var express = require('express'),
     router = express.Router(),
     MongoClient = require('mongodb').MongoClient,
-    assert = require('assert');
+    assert = require('assert'),
+    cheerio = require('cheerio');
 
 // TODO : Production - need to change this url
 var url = 'mongodb://localhost:27017/pdf_viewer';
@@ -22,7 +24,7 @@ router.post('/', function(req,res) {
         var doc = req.body;
 
         // collection.update(selector, document, {upsert: true})
-        collection.update({"Name": doc.Name}, {"Name": doc.Name, "better_pdf": doc.better_pdf}, {upsert: true});
+        collection.update({"Name": doc.Name}, {"Name": doc.Name, "better_pdf": doc.pdf_name}, {upsert: true});
 
 
         /*

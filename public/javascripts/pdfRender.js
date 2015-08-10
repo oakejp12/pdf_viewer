@@ -12,7 +12,8 @@ global.navigator = { userAgent: "node"};
 global.DOMParser = require('./domparsermock.js').DOMParserMock;
 */
 
-require('./pdf-combined.js');
+// TODO : It's supposed to be pdf_combined.js
+require('./pdf');
 
 
 var loadPdf = function(id, pdfLocation) {

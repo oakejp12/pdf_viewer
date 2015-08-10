@@ -70,7 +70,7 @@ router.get('/', function(req, res) {
      */
     var readDocuments = function(db, callback) {
         var nameSeparated = [], U_names = [], S_names = [], randomizedArray = [];
-        var wantedPdfs = 8; // TODO : manipulate via wanted pdf test cluster
+        var wantedPdfs = 20; // TODO : manipulate via wanted pdf test cluster
 
         // Collection to read from
         var collection = db.collection('fs.files');
@@ -166,13 +166,13 @@ router.get('/', function(req, res) {
         var range = [], newU = [], newS = [];
 
         // Math.floor(Math.random() * (max - min + 1)) + 1
-        var randomNumber = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
+        var randomNumber = Math.floor(Math.random() * (34 - 1 + 1)) + 1;
 
         // Generate random array
         // TODO : The modular number changes based on how many pdfs are available
         for (var i = 0; i < wnumber; i++) {
             // Do it mod 35 since we don't want (34 mod 34) === 0 => pfd at index 34 will never be shown
-            range.push((randomNumber + i) % 10);
+            range.push((randomNumber + i) % 35);
         }
 
         var j;

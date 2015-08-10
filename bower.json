@@ -7,11 +7,11 @@
   "description": "PDF viewer for metrology tests.",
   "main": "app.js",
   "license": "MIT",
-  "ignore": [
-  ],
+  "ignore": [],
   "dependencies": {
     "angular": "~1.4.3",
     "angular-resource": "~1.4.3",
-    "angular-route": "~1.4.3"
+    "angular-route": "~1.4.3",
+    "toastr": "~2.1.2"
   }
 }

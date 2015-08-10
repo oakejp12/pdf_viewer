@@ -115,10 +115,10 @@ block content
     .col-md-6
       h2 Simplied - S
       // INFO : PDF's are loaded from the bottom of /public/javascripts/pdfRender.js
-      canvas#canvasNum1(style='border:1px solid black' height='633' width='720')
+      canvas#canvasNum1(style='border:1px solid black' height='633' width='720' name="S_PDF")
     .col-md-6
       h2 Unsimplified - U
-      canvas#canvasNum2(style='border:1px solid black' height='633' width='720')
+      canvas#canvasNum2(style='border:1px solid black' height='633' width='720' name="U_PDF")
 
   br
   br
@@ -133,10 +133,11 @@ block content
   script(type="text/javascript").
     $("#update").click(function(event) {
       event.preventDefault();
-      var pdf = $("#pdf").val();
+      var pdf_name = document.getElementById('canvasNum1').getAttribute('name');
       var name = $("#name").val();
       var better_pdf = $("#betterPdf").val();
-      var dataString = 'Name=' + name + '&pdf=' + pdf + '&better_pdf='+better_pdf;
+      var dataString = 'Name=' + name + '&' + pdf_name + '=' + better_pdf;
+      console.log(dataString);
       $.ajax({
         type:'POST',
         data: dataString,
@@ -168,8 +169,17 @@ block content
       if (incrementValue >= lenU || incrementValue >= lenS) {
         alert('Test is over! Thank you!');
       } else {
+        // Get PDF name
+        if (returned_filenames[0][incrementValue].match(/[^U_]\w+\.\w+/g)[0] === returned_filenames[1][incrementValue].match(/[^S_]\w+\.\w+/g)[0]){
+          document.getElementById('canvasNum1').setAttribute('name', returned_filenames[0][incrementValue].match(/[^U_]\w+\.\w+/g));
+          // alert('Looking at ' + document.getElementsByTagName('canvas')[0].getAttribute('name'));
+        } else { alert('PDFs do not match!!!!\nPlease refresh browser.');}
+        // Load PDF's
         loadPdf('canvasNum2', 'uploads/' + returned_filenames[0][incrementValue]);
         loadPdf('canvasNum1', 'uploads/' + returned_filenames[1][incrementValue]);
+        
+        // Scroll to top of page
+        window.scrollTo(10,10);
       }
     }
 
