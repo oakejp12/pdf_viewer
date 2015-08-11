@@ -21,10 +21,10 @@ block content
                         label.col-md-2.control-label(for="printS") Is S good enough to print?
                         .col-md-10
                             label.radio-inline(for="radios-1")
-                                input#radios-1(type="radio" name="printS" value=1 checked="checked")
+                                input#radios-1(type="radio" name="printS" value="Yes" onclick="check(this.value)" checked="checked")
                                 | Yes
                             label.radio-inline(for="radios-0")
-                                input#radios-0(type="radio" name="printS" value=0)
+                                input#radios-0(type="radio" name="printS" value="No" onclick="check(this.value)")
                                 | No
                     .form-group
                         .col-md-10.col-md-offset-2

@@ -124,6 +124,17 @@ block content
   br
   br
 
+  // Get checked value of radio
+  script(type='text/javascript').
+    var checkedValue = '';
+    function check(print) {
+      if (document.getElementById('radios-1').value == "Yes") {
+          checkedValue = "Yes";
+        } else {
+          checkedValue === "No";
+        }
+    } 
+
 
   // Include form.jade
   include form
@@ -133,10 +144,13 @@ block content
   script(type="text/javascript").
     $("#update").click(function(event) {
       event.preventDefault();
+
+      console.log('Checked Value : ' + checkedValue)
+
       var pdf_name = document.getElementById('canvasNum1').getAttribute('name');
       var name = $("#name").val();
       var better_pdf = $("#betterPdf").val();
-      var dataString = 'Name=' + name + '&' + pdf_name + '=' + better_pdf;
+      var dataString = 'Name=' + name + '&PDF=' + pdf_name + '&Score=' + better_pdf + "&S_Print=" + checkedValue;
       console.log(dataString);
       $.ajax({
         type:'POST',

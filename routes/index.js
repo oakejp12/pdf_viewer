@@ -1,8 +1,8 @@
+/*jslint node: true */
+'use strict';
+
 var express = require('express'),
     router = express.Router();
-
-
-'use strict';
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -11,9 +11,6 @@ router.get('/', function(req, res) {
      * Created by Johan Oakes on 7/28/15.
      * TODO : Refactor this from '/public/javascripts/readFiles.js'
      */
-
-
-    'use strict';
 
 
     var express = require('express'),
@@ -30,7 +27,7 @@ router.get('/', function(req, res) {
 
     db.open(function(err, db) {
         if (err) throw err;
-        gfs = Grid(db, mongo);
+        gfs = new Grid(db, mongo);
     });
 
     var url = 'mongodb://localhost:27017/pdfs';
@@ -54,10 +51,7 @@ router.get('/', function(req, res) {
             console.log('*** Reading filenames : MongoClient.connect() ***');
 
             readDocuments (db, function(data) {
-                console.log("*** Reading file info : readDocuments()");
-
                 callback(data);
-
                 db.close();
             });
         });
@@ -108,9 +102,6 @@ router.get('/', function(req, res) {
      * @returns {*[]} a multidimensional array holding U and S files
      */
     function nameSeparation(array) {
-        console.log('*** Separating names : nameSeperation() ***');
-
-
         if (array.length > 0) {
             var S_names = [], U_names = [];
 
@@ -160,7 +151,6 @@ router.get('/', function(req, res) {
      * @returns {*[]} a multidimensional array holding random U and S files
      */
     function randomizeArray(u_array, s_array, wnumber) {
-        console.log('*** Randomizing filenames : randomizeArray() ***');
         console.log('*** Number of PDFs wanted: %d ***', wnumber);
         // Holds a random range between 0:10
         var range = [], newU = [], newS = [];

@@ -5,10 +5,13 @@ var express = require('express'),
     router = express.Router(),
     MongoClient = require('mongodb').MongoClient,
     assert = require('assert'),
-    cheerio = require('cheerio');
+    Qs = require('qs');
 
 // TODO : Production - need to change this url
 var url = 'mongodb://localhost:27017/pdf_viewer';
+
+
+
 
 
 /* POST form */
@@ -17,6 +20,7 @@ router.post('/', function(req,res) {
     console.log('*** Form Data below! ***');
     console.dir(req.body);
 
+
     MongoClient.connect(url, function (err, db) {
         assert.equal(null,err);
 
@@ -24,8 +28,8 @@ router.post('/', function(req,res) {
         var doc = req.body;
 
         // collection.update(selector, document, {upsert: true})
-        collection.update({"Name": doc.Name}, {"Name": doc.Name, "better_pdf": doc.pdf_name}, {upsert: true});
-
+        // { Name: "Johan Oakes", Result : { }}
+        collection.update({"Name": doc.Name}, { $addToSet: { "Result" : { "PDF" : doc.PDF, "Score" : doc.Score }}}, { upsert: true});
 
         /*
         // If "Name" already exists (person has already submitted a document) then update
