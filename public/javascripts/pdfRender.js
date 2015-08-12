@@ -11,7 +11,6 @@ global.PDFJS = {};
 global.navigator = { userAgent: "node"};
 global.DOMParser = require('./domparsermock.js').DOMParserMock;
 */
-
 // TODO : It's supposed to be pdf_combined.js
 require('./pdf');
 

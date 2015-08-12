@@ -16,27 +16,7 @@ router.get('/', function (req, res) {
 
   var express = require('express'),
     util = require('util'),
-    assert = require('assert'),
     fs = require('fs');
-
-  var mongo = require('mongodb'),
-    db = new mongo.Db('pdfs', new mongo.Server('127.0.0.1', 27017)),
-    MongoClient = mongo.MongoClient,
-    Grid = require('gridfs-stream'),
-    gfs;
-
-
-  db.open(function (err, db) {
-    if (err) throw err;
-    gfs = new Grid(db, mongo);
-  });
-
-  // TODO : Change URL for production system
-  var url = 'mongodb://localhost:27017/pdfs';
-
-  function connectToMongo(callback) {
-    MongoClient.connect(url, callback);
-  }
 
   /**
    * Get filenames for fs.files
@@ -45,16 +25,10 @@ router.get('/', function (req, res) {
    * @returns []
    */
   function getFiles(callback) {
+    console.log('*** Reading filenames ***');
 
-    connectToMongo(function (err, db) {
-      assert.equal(null, err);
-
-      console.log('*** Reading filenames : MongoClient.connect() ***');
-
-      readDocuments(db, function (data) {
-        callback(data);
-        db.close();
-      });
+    readDocuments(function (data) {
+      callback(data);
     });
   }
 
@@ -63,36 +37,28 @@ router.get('/', function (req, res) {
    * Procedural :: readDocuments -> nameSeparation -> randomizedArray
    * @param db ::
    */
-  var readDocuments = function (db, callback) {
+  var readDocuments = function (callback) {
     var nameSeparated = [],
       U_names = [],
       S_names = [],
       randomizedArray = [];
     var wantedPdfs = 20; // TODO : manipulate via wanted pdf test cluster
-    // Collection to read from
-    var collection = db.collection('fs.files');
 
-    collection.find({}).toArray(function (err, docs) {
-      assert.equal(err, null);
+    // TODO : Change based on version
+    // ./server/uploads/{version}/
+    var fileNames = fs.readdirSync('./server/uploads/7-10-1620/');
 
-      if (docs === null) {
-        console.log("*** Closing database : couldn't read filenames ***");
-        db.close();
-      }
 
-      console.log('Found %d documents when reading from database', docs.length);
+    nameSeparated = nameSeparation(fileNames);
+    U_names = nameSeparated[0].slice(0);
+    S_names = nameSeparated[1].slice(0);
 
-      nameSeparated = nameSeparation(docs);
-      U_names = nameSeparated[0].slice(0);
-      S_names = nameSeparated[1].slice(0);
+    randomizedArray = randomizeArray(U_names, S_names, wantedPdfs);
 
-      randomizedArray = randomizeArray(U_names, S_names, wantedPdfs);
+    U_names = randomizedArray[0].slice(0);
+    S_names = randomizedArray[1].slice(0);
 
-      U_names = randomizedArray[0].slice(0);
-      S_names = randomizedArray[1].slice(0);
-
-      callback([U_names, S_names]);
-    });
+    callback([U_names, S_names]);
   };
 
 
@@ -110,7 +76,7 @@ router.get('/', function (req, res) {
         U_names = [];
 
       for (var i = 0, j = array.length; i < j; i++) {
-        var key = array[i]['filename'];
+        var key = array[i];
         if (key.startsWith("S_"))
           S_names.push(key);
         else if (key.startsWith("U_"))
@@ -190,13 +156,6 @@ router.get('/', function (req, res) {
       data: JSON.stringify(array)
     });
   });
-
-
-  // res.render('index');
-});
-
-
-router.post('/', function (req, res) {
 
 });
 

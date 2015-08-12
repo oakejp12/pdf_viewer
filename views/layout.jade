@@ -6,7 +6,7 @@ html
     base(href='/')
     link(rel='stylesheet', href='/stylesheets/bootstrap.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
-  body(ng-app='app')
+  body
     nav.navbar.navbar-default(role='navigation')
       .container-fluid
         .navbar-header
@@ -15,18 +15,13 @@ html
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          div(ng-controller="urlCtrl")
-            a.navbar-brand(href='/#' ng-click="redirect('/')") HP PDF Viewer
+          div
+            a.navbar-brand(href='/') PDF Viewer
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
-          div(ng-controller="urlCtrl")
+          div
             ul.nav.navbar-nav
               li
-                a(href='/upload' ng-click="redirect('/upload')") Document Listing
-          div(ng-include="'/partials/navbar-login'")
-
-
-
+                a(href='/upload') Document Listing
 
 
     block content
-    include scripts

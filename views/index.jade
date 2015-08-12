@@ -2,12 +2,12 @@ extends layout
 
 block content
 
-  // div(ng-view) Displays partials/main.jade
   h1.text-center.text-info.page-header= 'View both PDF files and answer questions below.'
 
 
   // TODO : Create prev/next for each PDF
   div.container-fluid.center-block
+    h3 PDF Page Navigation
     button#prev.btn-info.btn-sm Previous
     button#next.btn-info.btn-sm Next
     span &nbsp;Page: &nbsp;
@@ -17,104 +17,12 @@ block content
     br
     br
 
-  // TODO: Mess with abstraction of bundle.js & pdfRender.js
-  script(type='text/javascript' src='/javascripts/pdf.js')
-  script(src='http://code.jquery.com/jquery-1.11.3.min.js')
-
-  script(type='text/javascript').
-    var loadPdf = function (id, pdfLocation) {
-      console.log('Loading pdf');
-
-      var url = pdfLocation,
-              pdfDoc = null,
-              pageNum = 1,
-              pageRendering = false,
-              pageNumPending = null,
-              scale = 1.2,
-              canvas = document.getElementById(id),
-              ctx = canvas.getContext('2d');
-      /*
-       * Get page info from document, resize canvas according, and render page
-       * @param num Page number.
-       */
-      function renderPage(num) {
-        pageRendering = true;
-        // Using promise to fetch the page
-        pdfDoc.getPage(num).then(function (page) {
-          var viewport = page.getViewport(scale);
-          canvas.height = viewport.height;
-          // Render PDF page into canvas context
-          var renderContext = {
-            canvasContext: ctx,
-            viewport: viewport
-          };
-          var renderTask = page.render(renderContext);
-          // Wait for rendering to finish
-          renderTask.promise.then(function () {
-            pageRendering = false;
-            if (pageNumPending !== null) {
-              // New page rendering is pending
-              renderPage(pageNumPending);
-              pageNumPending = null;
-            }
-          });
-        });
-        // Update page counters
-        document.getElementById('page_num').textContent = pageNum;
-      }
-
-      /*
-       * If another page is rendering in progress, wait until the rendering is
-       * finished. Otherwise, execute immediately.
-       */
-      function queueRenderPage(num) {
-        if (pageRendering) {
-          pageNumPending = num;
-        } else {
-          renderPage(num);
-        }
-      }
-
-      /*
-       * Displays previous page
-       */
-      function onPrevPage() {
-        if (pageNum <= 1) {
-          return;
-        }
-        pageNum--;
-        queueRenderPage(pageNum);
-      }
-
-      document.getElementById('prev').addEventListener('click', onPrevPage);
-      /*
-       * Displays next page
-       */
-      function onNextPage() {
-        if (pageNum >= pdfDoc.numPages) {
-          return;
-        }
-        pageNum++;
-        queueRenderPage(pageNum);
-      }
-
-      document.getElementById('next').addEventListener('click', onNextPage);
-      /*
-       * Asynchronously downloads PDF
-       */
-      PDFJS.getDocument(url).then(function (pdfDoc_) {
-        pdfDoc = pdfDoc_;
-        document.getElementById('page_count').textContent = pdfDoc.numPages;
-        // Initial/first page rendering
-        renderPage(pageNum);
-      });
-    };
+  include scripts    
 
 
   .row
     .col-md-6
       h2 Simplied - S
-      // INFO : PDF's are loaded from the bottom of /public/javascripts/pdfRender.js
       canvas#canvasNum1(style='border:1px solid black' height='633' width='720' name="S_PDF")
     .col-md-6
       h2 Unsimplified - U
@@ -124,17 +32,10 @@ block content
   br
   br
 
-  // Get checked value of radio
-  // TODO : Handle radio buttons
-  script(type='text/javascript').
-  
 
-
-  // Include form.jade
   include form
 
   // Script to handle update form
-  // TODO : Handle radio buttons
   script(type="text/javascript").
     $("#update").click(function(event) {
       event.preventDefault();
@@ -196,8 +97,9 @@ block content
           // alert('Looking at ' + document.getElementsByTagName('canvas')[0].getAttribute('name'));
         } else { alert('PDFs do not match!!!!\nPlease refresh browser.');}
         // Load PDF's
-        loadPdf('canvasNum2', 'uploads/' + returned_filenames[0][incrementValue]);
-        loadPdf('canvasNum1', 'uploads/' + returned_filenames[1][incrementValue]);
+        // TODO : Change this based on version!
+        loadPdf('canvasNum2', 'uploads/7-10-1620/' + returned_filenames[0][incrementValue]);
+        loadPdf('canvasNum1', 'uploads/7-10-1620/' + returned_filenames[1][incrementValue]);
         
         // Scroll to top of page
         window.scrollTo(10,10);

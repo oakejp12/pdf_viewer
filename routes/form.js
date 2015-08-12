@@ -4,14 +4,10 @@
 var express = require('express'),
   router = express.Router(),
   MongoClient = require('mongodb').MongoClient,
-  assert = require('assert'),
-  Qs = require('qs');
+  assert = require('assert');
 
 // TODO : Production - need to change this url
 var url = 'mongodb://localhost:27017/pdf_viewer';
-
-
-
 
 
 /* POST form */
@@ -29,7 +25,8 @@ router.post('/', function (req, res) {
     // collection.update(selector, document, {upsert: true})
     // { Name: "Johan Oakes", Result : { }}
     collection.update({
-      "Name": doc.Name
+      "Name": doc.Name,
+      "Version": "7-10-1620"
     }, {
       $addToSet: {
         "Result": {
