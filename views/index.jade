@@ -125,15 +125,9 @@ block content
   br
 
   // Get checked value of radio
+  // TODO : Handle radio buttons
   script(type='text/javascript').
-    var checkedValue = '';
-    function check(print) {
-      if (document.getElementById('radios-1').value == "Yes") {
-          checkedValue = "Yes";
-        } else {
-          checkedValue === "No";
-        }
-    } 
+  
 
 
   // Include form.jade
@@ -145,12 +139,25 @@ block content
     $("#update").click(function(event) {
       event.preventDefault();
 
-      console.log('Checked Value : ' + checkedValue)
+      var radios = document.getElementsByName('printS');
+      var checked = " ";
+      for (var i = 0, length = radios.length; i < length; i++) {
+        if (radios[i].checked) {
+          // do whatever you want with the checked radio
+          checked = radios[i].value;
+
+          // only one radio can be logically checked, don't check the rest
+          break;
+        }
+      }
+
+
+      console.log('Checked Value : ' + checked)
 
       var pdf_name = document.getElementById('canvasNum1').getAttribute('name');
       var name = $("#name").val();
       var better_pdf = $("#betterPdf").val();
-      var dataString = 'Name=' + name + '&PDF=' + pdf_name + '&Score=' + better_pdf + "&S_Print=" + checkedValue;
+      var dataString = 'Name=' + name + '&PDF=' + pdf_name + '&Score=' + better_pdf + "&S_Print=" + checked;
       console.log(dataString);
       $.ajax({
         type:'POST',
