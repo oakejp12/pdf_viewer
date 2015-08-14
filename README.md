@@ -6,6 +6,6 @@
 2. Change folder location inside multer middleware in *app.js*
   * `app.use(multer({...}))`
 3. Upload files using *Document Listing* page located in the navigation bar in the application.
-4. Change `fileNames` in `readDocuments()` in *routes/index.js*
+4. Change `fileNames` in `readDocuments()` in *routes/index.js* or you cab just manually place the PDFs in the folder
 5. Change `loadPdf()` in *views/index.jade* in `callback()` function.
 6. Change version string sent to MongoDB in *routes/form.js*
